@@ -19,22 +19,23 @@ class userViewModel(application: Application, savedStateHandle: SavedStateHandle
     AndroidViewModel(application)
 {
     val userLD = MutableLiveData<User?>()
-    private val statusLD: MutableLiveData<String?> = MutableLiveData()
+    private val statusLD: MutableLiveData<String> = MutableLiveData()
 
 
     val TAG = "volleyTag"
     private var queue: RequestQueue? = null
 
     fun login(username:String, password:String) {
+        Log.d("username", username)
         queue = Volley.newRequestQueue(getApplication())
-        val url = "http://10.0.2.2/HobbyApps/login.php?username=erin&password=erin"
+        val url = "http://10.0.2.2/HobbyApps/login.php?username=$username&password=$password"
 
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
                 val sType = object : TypeToken<User>() { }.type
                 val result = Gson().fromJson<User>(it, sType)
-                userLD.value = result as User?
+                userLD.value = result as User
                 Log.d("showvoley", it)
             },
             {

@@ -3,11 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/dogListFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.hobbyapps.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/dogListFragment"
+        android:name="com.example.hobbyapps.view.DogListFragment"
+        android:label="fragment_dog_list"
+        tools:layout="@layout/fragment_dog_list" >
+        <action
+            android:id="@+id/actionDogsDetailFragment"
+            app:destination="@id/dogDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dogDetailFragment"
+        android:name="com.example.hobbyapps.view.DogDetailFragment"
+        android:label="fragment_dog_detail"
+        tools:layout="@layout/fragment_dog_detail" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
 </navigation>

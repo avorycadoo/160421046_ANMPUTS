@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -45,19 +46,21 @@ class LoginActivity : AppCompatActivity() {
         shared = getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
 //        editor= shared.edit()
 
-        var checkLogin = shared.getInt("ID", -1)
-        if (checkLogin != -1) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            this.finish()
-        }
+//        var checkLogin = shared.getInt("ID", -1)
+//        if (checkLogin != -1) {
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+//            this.finish()
+//        }
 
         viewModel = ViewModelProvider(this).get(userViewModel::class.java)
 
 
         binding.btnLogin.setOnClickListener {
-            username = binding.txtUsername.toString()
-            password = binding.txtPassword.toString()
+            username = binding.txtUsername.editText?.text.toString()
+            password = binding.txtPassword.editText?.text.toString()
+
+            Log.d("username", username)
             if (username != "" && password != "") {
                 viewModel.login(password, username)
                 observeViewModel()
@@ -81,8 +84,8 @@ class LoginActivity : AppCompatActivity() {
         viewModel.userLD.observe(this, Observer { User ->
             if (User != null) {
                 id = User.id?.toInt() ?: -1
-                password = User.password.toString()
                 username = User.username.toString()
+                password = User.password.toString()
                 firstname = User.firstname.toString()
                 lastname = User.lastname.toString()
 
