@@ -6,7 +6,7 @@
     app:startDestination="@id/dogListFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/itemHome"
         android:name="com.example.hobbyapps.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
@@ -27,5 +27,23 @@
         <argument
             android:name="id"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemProfile"
+        android:name="com.example.hobbyapps.view.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/actionChangePassword"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.example.hobbyapps.view.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" >
+        <action
+            android:id="@+id/actionProfile"
+            app:destination="@id/itemProfile" />
     </fragment>
 </navigation>

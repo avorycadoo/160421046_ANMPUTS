@@ -33,10 +33,17 @@ class userViewModel(application: Application, savedStateHandle: SavedStateHandle
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
-                val sType = object : TypeToken<User>() { }.type
-                val result = Gson().fromJson<User>(it, sType)
-                userLD.value = result as User
-                Log.d("showvoley", it)
+                var obj = JSONObject(it)
+                var resultDb = obj.getString("result")
+                if (resultDb == "OK") {
+                    var data = obj.getJSONObject("data")
+                    val sType = object : TypeToken<User>() { }.type
+                    val result = Gson().fromJson<User>(data.toString(), sType)
+                    userLD.value = result as User?
+                }
+                else{
+                    userLD.value=null
+                }
             },
             {
                 Log.d("showvoley", it.toString())

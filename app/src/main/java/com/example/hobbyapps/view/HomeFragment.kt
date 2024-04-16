@@ -32,7 +32,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var USERNAME = "USERNAME"
 
         var sharedFile = "com.example.hobbyapps"
 
@@ -41,7 +40,7 @@ class HomeFragment : Fragment() {
 
 
         val txtWelcome = view.findViewById<TextView>(R.id.txtWelcome)
-        var name = shared.getString(USERNAME,"").toString()
+        var name = shared.getString(LoginActivity.USERNAME,"").toString()
         txtWelcome.text = "Welcome, " + name + ". Have a nice day !"
     }
 

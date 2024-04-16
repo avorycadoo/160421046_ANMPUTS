@@ -44,8 +44,8 @@ class LoginActivity : AppCompatActivity() {
 
         var sharedFile = "com.example.hobbyapps"
         shared = getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
-//        editor= shared.edit()
 
+        editor= shared.edit()
 //        var checkLogin = shared.getInt("ID", -1)
 //        if (checkLogin != -1) {
 //            val intent = Intent(this, MainActivity::class.java)
@@ -60,15 +60,14 @@ class LoginActivity : AppCompatActivity() {
             username = binding.txtUsername.editText?.text.toString()
             password = binding.txtPassword.editText?.text.toString()
 
-            Log.d("username", username)
-            if (username != "" && password != "") {
+            if (username.isNotBlank() && password.isNotBlank()) {
                 viewModel.login(password, username)
                 observeViewModel()
 
             } else {
                 Toast.makeText(
                     this,
-                    "Email and Password must not be empty",
+                    "Username and Password must not be empty",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -81,14 +80,16 @@ class LoginActivity : AppCompatActivity() {
 
     }
     private fun observeViewModel() {
-        viewModel.userLD.observe(this, Observer { User ->
-            if (User != null) {
-                id = User.id?.toInt() ?: -1
-                username = User.username.toString()
-                password = User.password.toString()
-                firstname = User.firstname.toString()
-                lastname = User.lastname.toString()
+        viewModel.userLD.observe(this, Observer { user ->
+            if (user != null) {
+                Log.d("username", user.toString())
 
+                id = user.id?.toInt() ?: -1
+                username = user.username.toString()
+                password = user.password.toString()
+                firstname = user.firstname.toString()
+                lastname = user.lastname.toString()
+                Log.d("username", username)
 
                 editor = shared.edit()
                 editor.putInt(ID, id)
@@ -104,8 +105,10 @@ class LoginActivity : AppCompatActivity() {
                 finish()
 
             } else {
-                Toast.makeText(applicationContext, "Your Password is Incorrect", Toast.LENGTH_SHORT)
+                Toast.makeText(applicationContext, "Your Username or Password is Incorrect", Toast.LENGTH_SHORT)
                     .show()
+
+
             }
 
         })
