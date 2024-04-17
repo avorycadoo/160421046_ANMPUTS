@@ -76,10 +76,10 @@ $result = null;
 if (isset($_GET["dogs_list"])) {
     $result = $arr;
     echo json_encode($result);
-} else if (isset($_GET["username_pembuat"])) {
-    $name = $_GET["username_pembuat"];
+} else if (isset($_GET["id"])) {
+    $id = $_GET["id"];
     foreach ($arr as $dogs) {
-        if ($dogs["username_pembuat"] == $name) {
+        if ($dogs["id"] == $id) {
             $result = $dogs;
             echo json_encode($result);
             break;
