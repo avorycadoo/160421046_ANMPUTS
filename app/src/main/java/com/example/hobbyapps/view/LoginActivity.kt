@@ -61,8 +61,8 @@ class LoginActivity : AppCompatActivity() {
             password = binding.txtPassword.editText?.text.toString()
 
             if (username.isNotBlank() && password.isNotBlank()) {
-                viewModel.login(password, username)
-                observeViewModel()
+                viewModel.login(username, password)
+
 
             } else {
                 Toast.makeText(
@@ -77,10 +77,12 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
+        observeViewModel()
 
     }
     private fun observeViewModel() {
         viewModel.userLD.observe(this, Observer { user ->
+            Log.d("user", user.toString())
             if (user != null) {
                 Log.d("username", user.toString())
 
@@ -108,8 +110,8 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Your Username or Password is Incorrect", Toast.LENGTH_SHORT)
                     .show()
 
-
             }
+
 
         })
     }

@@ -12,11 +12,12 @@ import com.android.volley.toolbox.Volley
 import com.example.hobbyapps.model.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.json.JSONObject
 
 class passwordViewModel(application: Application, savedStateHandle: SavedStateHandle):
     AndroidViewModel(application) {
-    val passLD = MutableLiveData<User?>()
-    private val statusLD: MutableLiveData<String> = MutableLiveData()
+    val passLD = MutableLiveData<String?>()
+    val statusLD = MutableLiveData<String>()
 
 
     val TAG = "volleyTag"
@@ -29,10 +30,16 @@ class passwordViewModel(application: Application, savedStateHandle: SavedStateHa
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
-                val sType = object : TypeToken<User>() { }.type
-                val result = Gson().fromJson<User>(it, sType)
-                passLD.value = result as User
-                Log.d("showvoley", it)
+                var obj = JSONObject(it)
+                statusLD.value = obj.getString("result")
+                passLD.value = obj.getString("password")
+                Log.d("password live data", passLD.value.toString())
+                Log.d("status live data", statusLD.value.toString())
+
+//                val sType = object : TypeToken<String>() { }.type
+//                val result = Gson().fromJson<String>(it, sType)
+//                statusLD.value = result
+//                Log.d("showvoley", it)
             },
             {
                 Log.d("showvoley", it.toString())

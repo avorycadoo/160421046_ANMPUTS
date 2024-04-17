@@ -29,6 +29,8 @@ class ChangePasswordFragment : Fragment() {
     private lateinit var editor: SharedPreferences.Editor
 
     var password : String = ""
+    var pass1 : String = ""
+    var currentPass : String = ""
 
 
     override fun onCreateView(
@@ -44,41 +46,49 @@ class ChangePasswordFragment : Fragment() {
 
         var sharedFile = "com.example.hobbyapps"
 
-        var shared: SharedPreferences = this.requireActivity().getSharedPreferences(sharedFile,
-            Context.MODE_PRIVATE )
+        // Initialize the class-level shared property
+        shared = this.requireActivity().getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
 
         viewModel = ViewModelProvider(this).get(passwordViewModel::class.java)
 
-
-
         binding.btnChangePassword.setOnClickListener{
             password = binding.txtPass.editText?.text.toString()
-            var id = shared.getInt(LoginActivity.ID,-1).toString()
+            pass1 = binding.txtPass1.editText?.text.toString()
+            currentPass = binding.txtCurrentPassword.editText?.text.toString()
 
-            if (password.isNotBlank()) {
-                viewModel.password(password,id)
+            var id = shared.getInt(LoginActivity.ID, -1).toString()
+
+            if (password.isNotBlank() && currentPass.isNotBlank() && password == pass1 ) {
+                viewModel.password(password, id)
                 observeViewModel()
-                val action = ChangePasswordFragmentDirections.actionProfile()
+                val action =ChangePasswordFragmentDirections.actionProfile()
                 Navigation.findNavController(it).navigate(action)
 
-            } else {
+            }else if(pass1 != password) {
                 Toast.makeText(
                     requireContext(),
-                    "Username and Password must not be empty",
+                    "Password doesn't match",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else {
+                Toast.makeText(
+                    requireContext(),
+                    "Password must not be empty",
                     Toast.LENGTH_SHORT
                 ).show()
             }
         }
     }
     private fun observeViewModel() {
-        viewModel.passLD.observe(viewLifecycleOwner, Observer { User ->
-            if (User != null) {
-                password = User.password.toString()
+        viewModel.passLD.observe(viewLifecycleOwner, Observer {
+            if (viewModel.passLD.value.toString() != "") {
+                password = viewModel.passLD.value.toString()
 
                 editor = shared.edit()
                 editor.putString(LoginActivity.PASSWORD, password)
                 editor.apply()
-
+                Log.d("password: ", password)
 
             } else {
                 Toast.makeText(
@@ -88,10 +98,10 @@ class ChangePasswordFragment : Fragment() {
                 )
                     .show()
 
-                // Hapus data yang ada di SharedPreferences
-                editor = shared.edit()
-                editor.clear()
-                editor.apply()
+//                 Hapus data yang ada di SharedPreferences
+//                editor = shared.edit()
+//                editor.clear()
+//                editor.apply()
             }
 
         })

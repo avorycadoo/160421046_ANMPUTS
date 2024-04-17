@@ -29,12 +29,14 @@ class userViewModel(application: Application, savedStateHandle: SavedStateHandle
         Log.d("username", username)
         queue = Volley.newRequestQueue(getApplication())
         val url = "http://10.0.2.2/HobbyApps/login.php?username=$username&password=$password"
-
+        Log.d("username1", username)
+        Log.d("password1", password)
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
                 var obj = JSONObject(it)
                 var resultDb = obj.getString("result")
+                Log.d("ResultDB",resultDb.toString())
                 if (resultDb == "OK") {
                     var data = obj.getJSONObject("data")
                     val sType = object : TypeToken<User>() { }.type
