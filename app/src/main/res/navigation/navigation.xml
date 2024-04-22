@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/itemHome"
         android:name="com.example.hobbyapps.view.HomeFragment"
-        android:label="fragment_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/dogListFragment"
         android:name="com.example.hobbyapps.view.DogListFragment"
-        android:label="fragment_dog_list"
-        tools:layout="@layout/fragment_dog_list" >
+        android:label="Home"
+        tools:layout="@layout/fragment_dog_list">
         <action
             android:id="@+id/actionDogsDetailFragment"
             app:destination="@id/dogDetailFragment" />
@@ -22,8 +22,8 @@
     <fragment
         android:id="@+id/dogDetailFragment"
         android:name="com.example.hobbyapps.view.DogDetailFragment"
-        android:label="fragment_dog_detail"
-        tools:layout="@layout/fragment_dog_detail" >
+        android:label="Detail Dog's Hobby"
+        tools:layout="@layout/fragment_dog_detail">
         <argument
             android:name="id"
             app:argType="string" />
@@ -31,8 +31,8 @@
     <fragment
         android:id="@+id/itemProfile"
         android:name="com.example.hobbyapps.view.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/actionChangePassword"
             app:destination="@id/changePasswordFragment" />
@@ -40,8 +40,8 @@
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="com.example.hobbyapps.view.ChangePasswordFragment"
-        android:label="fragment_change_password"
-        tools:layout="@layout/fragment_change_password" >
+        android:label="Change Password"
+        tools:layout="@layout/fragment_change_password">
         <action
             android:id="@+id/actionProfile"
             app:destination="@id/itemProfile" />
